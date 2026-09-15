@@ -11,10 +11,9 @@ You can either get it from [here](https://github.com/vexk1x/Bladeball-macro/rele
 or download/copy the source code and run:
 
 ```C#
-dotnet publish "Bladeball/Bladeball.csproj" -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+msbuild Bladeball.slnx /p:Configuration=Release
 ```
 after you cd into the folder containing the solution file.
-> Building it yourself requires the [.Net Runtime](https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/10.0.12/windowsdesktop-runtime-10.0.12-win-x64.exe)
 
 
 ## Is it safe to use?
