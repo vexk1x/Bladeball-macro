@@ -3,12 +3,12 @@
     partial class Form1
     {
         /// <summary>
-        ///  Required designer variable.
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        ///  Clean up any resources being used.
+        /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
@@ -23,194 +23,180 @@
         #region Windows Form Designer generated code
 
         /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
-            main = new Panel();
-            ExitButton = new Button();
-            textBox1 = new TextBox();
-            label5 = new Label();
-            label4 = new Label();
-            label3 = new Label();
-            label2 = new Label();
-            label1 = new Label();
-            StartKey = new Button();
-            BlockKey2 = new Button();
-            BlockKey1 = new Button();
-            label6 = new Label();
-            main.SuspendLayout();
-            SuspendLayout();
-            // 
-            // button1
-            // 
-            button1.Location = new Point(3, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 1;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
+            this.main = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.ExitButton = new System.Windows.Forms.Button();
+            this.StartKey = new System.Windows.Forms.Button();
+            this.BlockKey2 = new System.Windows.Forms.Button();
+            this.BlockKey1 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.main.SuspendLayout();
+            this.SuspendLayout();
             // 
             // main
             // 
-            main.BackColor = Color.FromArgb(17, 19, 24);
-            main.Controls.Add(label6);
-            main.Controls.Add(ExitButton);
-            main.Controls.Add(textBox1);
-            main.Controls.Add(label5);
-            main.Controls.Add(label4);
-            main.Controls.Add(label3);
-            main.Controls.Add(label2);
-            main.Controls.Add(label1);
-            main.Controls.Add(StartKey);
-            main.Controls.Add(BlockKey2);
-            main.Controls.Add(BlockKey1);
-            main.Dock = DockStyle.Fill;
-            main.Location = new Point(0, 0);
-            main.Name = "main";
-            main.Size = new Size(484, 245);
-            main.TabIndex = 0;
-            // 
-            // ExitButton
-            // 
-            ExitButton.Location = new Point(367, 184);
-            ExitButton.Name = "ExitButton";
-            ExitButton.Size = new Size(75, 23);
-            ExitButton.TabIndex = 1;
-            ExitButton.UseVisualStyleBackColor = true;
-            ExitButton.Click += ExitButton_Click;
-            // 
-            // textBox1
-            // 
-            textBox1.BackColor = Color.FromArgb(34, 38, 48);
-            textBox1.ForeColor = Color.White;
-            textBox1.Location = new Point(323, 42);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(149, 23);
-            textBox1.TabIndex = 9;
-            textBox1.TextChanged += CpsChanged;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.ForeColor = SystemColors.AppWorkspace;
-            label5.Location = new Point(283, 46);
-            label5.Name = "label5";
-            label5.Size = new Size(34, 15);
-            label5.TabIndex = 8;
-            label5.Text = "CPS: ";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.BackColor = Color.Transparent;
-            label4.ForeColor = SystemColors.AppWorkspace;
-            label4.Location = new Point(134, 184);
-            label4.Name = "label4";
-            label4.Size = new Size(96, 15);
-            label4.TabIndex = 7;
-            label4.Text = "(Start / Stop Key)";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.ForeColor = SystemColors.AppWorkspace;
-            label3.Location = new Point(134, 99);
-            label3.Name = "label3";
-            label3.Size = new Size(75, 15);
-            label3.TabIndex = 6;
-            label3.Text = "(Block Key 2)";
+            this.main.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(19)))), ((int)(((byte)(24)))));
+            this.main.Controls.Add(this.label6);
+            this.main.Controls.Add(this.label3);
+            this.main.Controls.Add(this.label5);
+            this.main.Controls.Add(this.label4);
+            this.main.Controls.Add(this.label2);
+            this.main.Controls.Add(this.label1);
+            this.main.Controls.Add(this.textBox1);
+            this.main.Controls.Add(this.ExitButton);
+            this.main.Controls.Add(this.StartKey);
+            this.main.Controls.Add(this.BlockKey2);
+            this.main.Controls.Add(this.BlockKey1);
+            this.main.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.main.Location = new System.Drawing.Point(0, 0);
+            this.main.Name = "main";
+            this.main.Size = new System.Drawing.Size(470, 225);
+            this.main.TabIndex = 0;
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.BackColor = Color.Transparent;
-            label2.ForeColor = SystemColors.AppWorkspace;
-            label2.Location = new Point(134, 46);
-            label2.Name = "label2";
-            label2.Size = new Size(75, 15);
-            label2.TabIndex = 5;
-            label2.Text = "(Block Key 1)";
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label2.Location = new System.Drawing.Point(271, 35);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "CPS: ";
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.ForeColor = SystemColors.ButtonFace;
-            label1.Location = new Point(3, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(123, 15);
-            label1.TabIndex = 4;
-            label1.Text = "Hotkeys (ESC to reset)";
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(117, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Hotkeys: (ESC to reset)";
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(38)))), ((int)(((byte)(48)))));
+            this.textBox1.ForeColor = System.Drawing.Color.White;
+            this.textBox1.Location = new System.Drawing.Point(311, 32);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(147, 20);
+            this.textBox1.TabIndex = 4;
+            this.textBox1.TextChanged += new System.EventHandler(this.CpsChanged);
+            // 
+            // ExitButton
+            // 
+            this.ExitButton.Location = new System.Drawing.Point(358, 168);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(75, 23);
+            this.ExitButton.TabIndex = 3;
+            this.ExitButton.UseVisualStyleBackColor = true;
+            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
             // StartKey
             // 
-            StartKey.Location = new Point(26, 180);
-            StartKey.Name = "StartKey";
-            StartKey.Size = new Size(75, 23);
-            StartKey.TabIndex = 3;
-            StartKey.Text = "button2";
-            StartKey.UseVisualStyleBackColor = true;
-            StartKey.Click += StartKey_Click;
+            this.StartKey.Location = new System.Drawing.Point(28, 168);
+            this.StartKey.Name = "StartKey";
+            this.StartKey.Size = new System.Drawing.Size(75, 23);
+            this.StartKey.TabIndex = 2;
+            this.StartKey.UseVisualStyleBackColor = true;
+            this.StartKey.Click += new System.EventHandler(this.StartKey_Click);
             // 
             // BlockKey2
             // 
-            BlockKey2.Location = new Point(26, 95);
-            BlockKey2.Name = "BlockKey2";
-            BlockKey2.Size = new Size(75, 23);
-            BlockKey2.TabIndex = 2;
-            BlockKey2.Text = "button2";
-            BlockKey2.UseVisualStyleBackColor = true;
-            BlockKey2.Click += BlockKey2_Click;
+            this.BlockKey2.Location = new System.Drawing.Point(28, 77);
+            this.BlockKey2.Name = "BlockKey2";
+            this.BlockKey2.Size = new System.Drawing.Size(75, 23);
+            this.BlockKey2.TabIndex = 1;
+            this.BlockKey2.UseVisualStyleBackColor = true;
+            this.BlockKey2.Click += new System.EventHandler(this.BlockKey2_Click);
             // 
             // BlockKey1
             // 
-            BlockKey1.Location = new Point(26, 42);
-            BlockKey1.Name = "BlockKey1";
-            BlockKey1.Size = new Size(75, 23);
-            BlockKey1.TabIndex = 1;
-            BlockKey1.Text = "button2";
-            BlockKey1.UseVisualStyleBackColor = true;
-            BlockKey1.Click += BlockKey1_Click;
+            this.BlockKey1.Location = new System.Drawing.Point(28, 32);
+            this.BlockKey1.Name = "BlockKey1";
+            this.BlockKey1.Size = new System.Drawing.Size(75, 23);
+            this.BlockKey1.TabIndex = 0;
+            this.BlockKey1.UseVisualStyleBackColor = true;
+            this.BlockKey1.Click += new System.EventHandler(this.BlockKey1_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label4.Location = new System.Drawing.Point(134, 82);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(86, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "(Block Hotkey 2)";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label5.Location = new System.Drawing.Point(134, 173);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(99, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "(Start/Stop Hotkey)";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label3.Location = new System.Drawing.Point(134, 37);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(86, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "(Block Hotkey 1)";
             // 
             // label6
             // 
-            label6.AutoSize = true;
-            label6.ForeColor = SystemColors.ButtonFace;
-            label6.Location = new Point(323, 9);
-            label6.Name = "label6";
-            label6.Size = new Size(126, 15);
-            label6.TabIndex = 1;
-            label6.Text = "BladeBall Macro V1.1.0";
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label6.Location = new System.Drawing.Point(332, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(117, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Bladeball Macro V1.1.1";
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(484, 245);
-            Controls.Add(main);
-            Name = "Form1";
-            Text = "Form1";
-            main.ResumeLayout(false);
-            main.PerformLayout();
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(470, 225);
+            this.Controls.Add(this.main);
+            this.Name = "Form1";
+            this.Text = "Form1";
+            this.main.ResumeLayout(false);
+            this.main.PerformLayout();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
 
-        private Button button1;
-        private Panel main;
-        private Label label4;
-        private Label label3;
-        private Label label2;
-        private Label label1;
-        private Button StartKey;
-        private Button BlockKey2;
-        private Button BlockKey1;
-        private TextBox textBox1;
-        private Label label5;
-        private Button ExitButton;
-        private Label label6;
+        private System.Windows.Forms.Panel main;
+        private System.Windows.Forms.Button ExitButton;
+        private System.Windows.Forms.Button StartKey;
+        private System.Windows.Forms.Button BlockKey2;
+        private System.Windows.Forms.Button BlockKey1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
     }
 }
+
