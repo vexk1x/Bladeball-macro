@@ -1,7 +1,12 @@
-using System;
+﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Bladeball
 {
@@ -68,7 +73,7 @@ namespace Bladeball
         {
             timeBeginPeriod(1);
             bool waspressed = false;
-            SendInput? send = null;
+            SendInput send = null;
 
             while (true)
             {
@@ -102,8 +107,7 @@ namespace Bladeball
 
                 Macro.Click();
 
-                if (send is not null)
-                    Macro.Send(send);
+                Macro.Send(send);
 
                 sw.Stop();
 
@@ -151,12 +155,12 @@ namespace Bladeball
             Region = new Region(path);
         }
 
-        private void pMouseDown(object? sender, MouseEventArgs e)
+        private void pMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, IntPtr.Zero);
+                SendMessage(Handle, WM_NCLBUTTONDOWN, (IntPtr)HTCAPTION, IntPtr.Zero);
             }
         }
 
@@ -273,7 +277,7 @@ namespace Bladeball
             StartKey.Text = "Enter Hotkey";
         }
 
-        private void CpsChanged(object? sender, EventArgs e)
+        private void CpsChanged(object sender, EventArgs e)
         {
             if (!int.TryParse(textBox1.Text, out int cps) || cps <= 0)
                 return;

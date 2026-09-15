@@ -1,3 +1,6 @@
+﻿using System;
+using System.Windows.Forms;
+
 namespace Bladeball
 {
     internal static class Program
@@ -5,7 +8,8 @@ namespace Bladeball
         [STAThread]
         static void Main()
         {
-            ApplicationConfiguration.Initialize();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
     }

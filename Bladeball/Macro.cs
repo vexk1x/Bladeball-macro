@@ -13,7 +13,6 @@ namespace Bladeball
         private const uint MOUSEEVENTF_LEFTDOWN = 0x0002;
         private const uint MOUSEEVENTF_LEFTUP = 0x0004;
 
-        public static volatile bool run = false;
 
         public static void Click()
         {
@@ -32,9 +31,9 @@ namespace Bladeball
             return 1000 / cps;
         }
 
-        public static SendInput? GetInput(byte key1, byte key2)
+        public static SendInput GetInput(byte key1, byte key2)
         {
-            SendInput? sendinp = null;
+            SendInput sendinp = null;
 
             if (key1 != 0 && key2 != 0)
                 sendinp = new SendInput(key1, key2);
@@ -50,7 +49,7 @@ namespace Bladeball
 
         public static void Send(SendInput sendinp)
         {
-            if (sendinp is not null)
+            if (sendinp != null)
                 sendinp.SendKeys();
         }
     }
