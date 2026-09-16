@@ -51,15 +51,15 @@ namespace Bladeball
             FormBorderStyle = FormBorderStyle.None;
             main.MouseDown += pMouseDown;
             StyleCorners();
-            StyleButton(BlockKey1, BlockKey2, StartKey, ExitButton);
+            StyleButton(BlockKey1, BlockKey2, StartKey);
 
             KeyPreview = true;
             KeyDown += AssignHotkey;
             KeyUp += FinishAssigningHotkey;
             Load += Form1_Load;
+            FormClosed += Form1_Close;
 
-            ExitButton.Text = "Exit";
-            ExitButton.ForeColor = Color.Red;
+            InitTitlebar();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -67,6 +67,11 @@ namespace Bladeball
             LoadSettings();
 
             Task.Run(Start);
+        }
+
+        private void Form1_Close(object sender, EventArgs e)
+        {
+            SaveSettings();
         }
 
         private void Start()
@@ -143,7 +148,7 @@ namespace Bladeball
         {
             GraphicsPath path = new GraphicsPath();
             Rectangle bounds = new Rectangle(0, 0, Width, Height);
-            int d = 20 * 2;
+            int d = 15 * 2;
 
             path.StartFigure();
             path.AddArc(bounds.X, bounds.Y, d, d, 180, 90);
@@ -290,8 +295,65 @@ namespace Bladeball
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            SaveSettings();
-            Environment.Exit(0);
+            Close();
+        }
+
+        private void MinimizeButton_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void InitTitlebar()
+        {
+            Panel Titlebar = new Panel();
+            Panel Seperator = new Panel();
+
+            Titlebar.Dock = DockStyle.Top;
+            Titlebar.Height = 26;
+            Titlebar.BackColor = Color.FromArgb(17, 19, 24);
+
+            Seperator.Dock = DockStyle.Bottom;
+            Seperator.BackColor = Color.FromArgb(75, 200, 200, 200);
+            Seperator.Height = 1;
+
+            this.Controls.Add(Titlebar);
+            Titlebar.MouseDown += pMouseDown;
+
+            Button ExitButton = new Button();
+            ExitButton.Click += ExitButton_Click;
+
+            Button MinimizeButton = new Button();
+            MinimizeButton.Click += MinimizeButton_Click;
+
+            ExitButton.FlatStyle = FlatStyle.Flat;
+            ExitButton.FlatAppearance.BorderSize = 0;
+
+            MinimizeButton.FlatStyle = FlatStyle.Flat;
+            MinimizeButton.FlatAppearance.BorderSize = 0;
+
+            ExitButton.Size = new Size(40, Titlebar.Height);
+            MinimizeButton.Size = new Size(40, Titlebar.Height);
+
+            ExitButton.Location = new Point(Titlebar.ClientSize.Width - ExitButton.Width, 0);
+            MinimizeButton.Location = new Point(ExitButton.Left - MinimizeButton.Width, 0);
+
+            ExitButton.Text = "X";
+            MinimizeButton.Text = "--";
+
+            ExitButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            MinimizeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+
+            ExitButton.TextAlign = ContentAlignment.MiddleCenter;
+            MinimizeButton.TextAlign = ContentAlignment.MiddleCenter;
+
+            ExitButton.ForeColor = Color.White;
+            MinimizeButton.ForeColor = Color.White;
+
+            Titlebar.Controls.Add(Seperator);
+            Titlebar.Controls.Add(ExitButton);
+            Titlebar.Controls.Add(MinimizeButton);
+  
+            Titlebar.BringToFront();
         }
     }
 }
