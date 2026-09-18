@@ -1,7 +1,7 @@
 # Bladeball-macro
 A macro for the Roblox game "Bladeball"
 You can assign 2 Block keys and it automatically presses Left click.
-** Press ESC on a button after you clicked it to reset the Hotkey **
+**Press ESC on a button after you clicked it to reset the Hotkey**
 
 The standard starting hotkey is F
 
