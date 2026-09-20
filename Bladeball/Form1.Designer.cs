@@ -38,12 +38,16 @@
             this.StartKey = new System.Windows.Forms.Button();
             this.BlockKey2 = new System.Windows.Forms.Button();
             this.BlockKey1 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.main.SuspendLayout();
             this.SuspendLayout();
             // 
             // main
             // 
             this.main.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(19)))), ((int)(((byte)(24)))));
+            this.main.Controls.Add(this.linkLabel1);
+            this.main.Controls.Add(this.label7);
             this.main.Controls.Add(this.label3);
             this.main.Controls.Add(this.label5);
             this.main.Controls.Add(this.label4);
@@ -146,6 +150,28 @@
             this.BlockKey1.UseVisualStyleBackColor = true;
             this.BlockKey1.Click += new System.EventHandler(this.BlockKey1_Click);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label7.Location = new System.Drawing.Point(352, 179);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(85, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Made by vexk1x";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.LinkColor = System.Drawing.Color.CornflowerBlue;
+            this.linkLabel1.Location = new System.Drawing.Point(340, 203);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(118, 13);
+            this.linkLabel1.TabIndex = 12;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Check for updates here";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -172,6 +198,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Label label7;
     }
 }
 

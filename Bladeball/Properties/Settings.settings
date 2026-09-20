@@ -1,27 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Bladeball.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
   <Profiles />
-  <Settings>
-    <Setting Name="StartKey" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">70</Value>
-    </Setting>
-    <Setting Name="BlockKey1" Type="System.Byte" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="BlockKey2" Type="System.Byte" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="CPS" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">25</Value>
-    </Setting>
-    <Setting Name="StartKeyText" Type="System.String" Scope="User">
-      <Value Profile="(Default)">F</Value>
-    </Setting>
-    <Setting Name="BlockKey1Text" Type="System.String" Scope="User">
-      <Value Profile="(Default)">None</Value>
-    </Setting>
-    <Setting Name="BlockKey2Text" Type="System.String" Scope="User">
-      <Value Profile="(Default)">None</Value>
-    </Setting>
-  </Settings>
+  <Settings />
 </SettingsFile>

@@ -239,26 +239,29 @@ namespace Bladeball
 
         private void LoadSettings()
         {
-            iStartKey = Properties.Settings.Default.StartKey;
-            bBlockKey1 = Properties.Settings.Default.BlockKey1;
-            bBlockKey2 = Properties.Settings.Default.BlockKey2;
-            CPS = Properties.Settings.Default.CPS;
-            StartKey.Text = Properties.Settings.Default.StartKeyText;
-            BlockKey1.Text = Properties.Settings.Default.BlockKey1Text;
-            BlockKey2.Text = Properties.Settings.Default.BlockKey2Text;
+            Settings.LoadSettings();
+
+            iStartKey = Settings.data.StartKey;
+            bBlockKey1 = Settings.data.BlockKey1;
+            bBlockKey2 = Settings.data.BlockKey2;
+            CPS = Settings.data.CPS;
+            StartKey.Text = Settings.data.StartKeyText;
+            BlockKey1.Text = Settings.data.BlockKey1Text;
+            BlockKey2.Text = Settings.data.BlockKey2Text;
             textBox1.Text = CPS.ToString();
         }
 
         private void SaveSettings()
         {
-            Properties.Settings.Default.StartKey = iStartKey;
-            Properties.Settings.Default.BlockKey1 = bBlockKey1;
-            Properties.Settings.Default.BlockKey2 = bBlockKey2;
-            Properties.Settings.Default.CPS = CPS;
-            Properties.Settings.Default.BlockKey1Text = BlockKey1.Text;
-            Properties.Settings.Default.BlockKey2Text = BlockKey2.Text;
-            Properties.Settings.Default.StartKeyText = StartKey.Text;
-            Properties.Settings.Default.Save();
+            Settings.data.StartKey = iStartKey;
+            Settings.data.BlockKey1 = bBlockKey1;
+            Settings.data.BlockKey2 = bBlockKey2;
+            Settings.data.CPS = CPS;
+            Settings.data.StartKeyText = StartKey.Text;
+            Settings.data.BlockKey1Text = BlockKey1.Text;
+            Settings.data.BlockKey2Text = BlockKey2.Text;
+
+            Settings.SaveSettings();
         }
 
         private void BlockKey1_Click(object sender, EventArgs e)
@@ -289,8 +292,8 @@ namespace Bladeball
 
             CPS = cps;
 
-            Properties.Settings.Default.CPS = CPS;
-            Properties.Settings.Default.Save();
+            Settings.data.CPS = cps;
+            Settings.SaveSettings();
         }
 
         private void ExitButton_Click(object sender, EventArgs e)
@@ -349,11 +352,26 @@ namespace Bladeball
             ExitButton.ForeColor = Color.White;
             MinimizeButton.ForeColor = Color.White;
 
+            Label name = new Label();
+            name.ForeColor = Color.White;
+            name.TextAlign = ContentAlignment.MiddleCenter;
+            name.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            name.Size = new Size(40, Titlebar.Height);
+            name.AutoSize = true;
+            name.Location = new Point(name.Width / 2, 5);
+            name.Text = "Bladeball Macro v1.1.3";
+
             Titlebar.Controls.Add(Seperator);
             Titlebar.Controls.Add(ExitButton);
             Titlebar.Controls.Add(MinimizeButton);
+            Titlebar.Controls.Add(name);
   
             Titlebar.BringToFront();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("https://github.com/vexk1x/Bladeball-macro") { UseShellExecute = true });
         }
     }
 }
