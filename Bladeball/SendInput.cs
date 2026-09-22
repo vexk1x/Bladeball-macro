@@ -13,6 +13,7 @@ namespace Bladeball
         private const uint KEYEVENTF_SCANCODE = 0x0008;
 
         private byte[] keys;
+        Macro sleep = new Macro(null);
 
         public SendInput(params byte[] keys)
         {
@@ -27,7 +28,7 @@ namespace Bladeball
             for (int i = 0; i < keys.Length; i++)
             {
                 keybd_event(0, keys[i], KEYEVENTF_SCANCODE, UIntPtr.Zero);
-                Thread.Sleep(1);
+                sleep.Sleep(1);
                 keybd_event(0, keys[i], KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP, UIntPtr.Zero);
             }
         }

@@ -28,24 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.main = new System.Windows.Forms.Panel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.label7 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.StartKey = new System.Windows.Forms.Button();
             this.BlockKey2 = new System.Windows.Forms.Button();
             this.BlockKey1 = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.CpsTrackBar = new System.Windows.Forms.TrackBar();
             this.main.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CpsTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // main
             // 
-            this.main.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(19)))), ((int)(((byte)(24)))));
+            this.main.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(10)))), ((int)(((byte)(12)))));
+            this.main.Controls.Add(this.CpsTrackBar);
             this.main.Controls.Add(this.linkLabel1);
             this.main.Controls.Add(this.label7);
             this.main.Controls.Add(this.label3);
@@ -53,7 +56,6 @@
             this.main.Controls.Add(this.label4);
             this.main.Controls.Add(this.label2);
             this.main.Controls.Add(this.label1);
-            this.main.Controls.Add(this.textBox1);
             this.main.Controls.Add(this.StartKey);
             this.main.Controls.Add(this.BlockKey2);
             this.main.Controls.Add(this.BlockKey1);
@@ -62,6 +64,28 @@
             this.main.Name = "main";
             this.main.Size = new System.Drawing.Size(470, 239);
             this.main.TabIndex = 0;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.LinkColor = System.Drawing.Color.CornflowerBlue;
+            this.linkLabel1.Location = new System.Drawing.Point(24, 198);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(118, 13);
+            this.linkLabel1.TabIndex = 12;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Check for updates here";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label7.Location = new System.Drawing.Point(38, 185);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(85, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Made by vexk1x";
             // 
             // label3
             // 
@@ -77,7 +101,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label5.Location = new System.Drawing.Point(134, 198);
+            this.label5.Location = new System.Drawing.Point(362, 172);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(99, 13);
             this.label5.TabIndex = 9;
@@ -113,19 +137,9 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "Hotkeys: (ESC to reset)";
             // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(38)))), ((int)(((byte)(48)))));
-            this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(311, 61);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(147, 20);
-            this.textBox1.TabIndex = 4;
-            this.textBox1.TextChanged += new System.EventHandler(this.CpsChanged);
-            // 
             // StartKey
             // 
-            this.StartKey.Location = new System.Drawing.Point(28, 193);
+            this.StartKey.Location = new System.Drawing.Point(362, 188);
             this.StartKey.Name = "StartKey";
             this.StartKey.Size = new System.Drawing.Size(75, 23);
             this.StartKey.TabIndex = 2;
@@ -150,27 +164,12 @@
             this.BlockKey1.UseVisualStyleBackColor = true;
             this.BlockKey1.Click += new System.EventHandler(this.BlockKey1_Click);
             // 
-            // label7
+            // CpsTrackBar
             // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label7.Location = new System.Drawing.Point(352, 179);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(85, 13);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Made by vexk1x";
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.LinkColor = System.Drawing.Color.CornflowerBlue;
-            this.linkLabel1.Location = new System.Drawing.Point(340, 203);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(118, 13);
-            this.linkLabel1.TabIndex = 12;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Check for updates here";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.CpsTrackBar.Location = new System.Drawing.Point(311, 58);
+            this.CpsTrackBar.Name = "CpsTrackBar";
+            this.CpsTrackBar.Size = new System.Drawing.Size(147, 45);
+            this.CpsTrackBar.TabIndex = 14;
             // 
             // Form1
             // 
@@ -178,10 +177,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(470, 239);
             this.Controls.Add(this.main);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Onyx";
             this.main.ResumeLayout(false);
             this.main.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CpsTrackBar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -192,7 +193,6 @@
         private System.Windows.Forms.Button StartKey;
         private System.Windows.Forms.Button BlockKey2;
         private System.Windows.Forms.Button BlockKey1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
@@ -200,6 +200,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TrackBar CpsTrackBar;
     }
 }
 

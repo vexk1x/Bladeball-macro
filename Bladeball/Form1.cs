@@ -18,46 +18,49 @@ namespace Bladeball
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 
-        [DllImport("winmm.dll")]
-        private static extern uint timeBeginPeriod(uint uPeriod);
-
         private const int WM_NCLBUTTONDOWN = 0xA1;
         private const int HTCAPTION = 0x2;
 
 
         [DllImport("user32.dll")]
-        private static extern short GetAsyncKeyState(int vKey);
-
-        [DllImport("user32.dll")]
         private static extern uint MapVirtualKey(uint uCode, uint uMapType);
 
-        private const uint MapVK_TO_VSC = 0;
+        private const uint MapVK_to_VSC = 0;
 
-        private int iStartKey = 0x46; // F, 0x46
-        private byte bBlockKey1;
-        private byte bBlockKey2;
-
-        private volatile bool running = false;
-        private volatile bool AssigningKey = false;
-
-        private int CPS = 25;
+        public bool AssigningKey { get; set; } = false;
 
         private int KeyIndex = 0;
 
+        private const string Version = "1.1.4";
+
+        private Color Theme;
+        private Color BackgroundTheme;
+
+        Macro macro;
 
         public Form1()
         {
             InitializeComponent();
+
+            macro = new Macro(this);
+
             FormBorderStyle = FormBorderStyle.None;
+
+            Theme = Color.FromArgb(14, 16, 19);
+            BackgroundTheme = Color.FromArgb(7, 9, 10);
+
+            Load += Form1_Load;
+            FormClosed += Form1_Close;
+
             main.MouseDown += pMouseDown;
+            main.BackColor = BackgroundTheme;
+
             StyleCorners();
             StyleButton(BlockKey1, BlockKey2, StartKey);
 
             KeyPreview = true;
             KeyDown += AssignHotkey;
             KeyUp += FinishAssigningHotkey;
-            Load += Form1_Load;
-            FormClosed += Form1_Close;
 
             InitTitlebar();
         }
@@ -66,7 +69,14 @@ namespace Bladeball
         {
             LoadSettings();
 
-            Task.Run(Start);
+            InitTrackBar();
+
+            Thread T = new Thread(macro.Start)
+            {
+                IsBackground = true,
+                Priority = ThreadPriority.Highest,
+            }; T.Start();
+
         }
 
         private void Form1_Close(object sender, EventArgs e)
@@ -74,65 +84,15 @@ namespace Bladeball
             SaveSettings();
         }
 
-        private void Start()
-        {
-            timeBeginPeriod(1);
-            bool waspressed = false;
-            SendInput send = null;
-
-            while (true)
-            {
-                bool pressed = GetAsyncKeyState(iStartKey) < 0;
-
-                if (pressed && !waspressed && !AssigningKey)
-                {
-                    running = !running;
-
-                    if (running)
-                        send = Macro.GetInput(bBlockKey1, bBlockKey2);
-                }
-
-                waspressed = pressed;
-
-                if (!running)
-                {
-                    Thread.Sleep(5);
-                    continue;
-                }
-
-                int delay = Macro.GetDelay(CPS);
-
-                if (delay <= 0)
-                {
-                    Thread.Sleep(5);
-                    continue;
-                }
-
-                Stopwatch sw = Stopwatch.StartNew();
-
-                Macro.Click();
-
-                Macro.Send(send);
-
-                sw.Stop();
-
-                int rest = delay - (int)sw.ElapsedMilliseconds;
-
-                if (rest > 0)
-                    Thread.Sleep(rest);
-            }
-        }
-
         private void StyleButton(params Button[] button)
         {
             foreach (Button b in button)
             {
-                b.BackColor = Color.FromArgb(25, 28, 35);
+                b.BackColor = Theme;
                 b.ForeColor = Color.White;
 
                 b.FlatStyle = FlatStyle.Flat;
-                b.FlatAppearance.BorderSize = 1;
-                b.FlatAppearance.BorderColor = Color.FromArgb(55, 60, 70);
+                b.FlatAppearance.BorderSize = 0;
                 b.Size = new Size(100, 30);
 
                 b.Text = "None";
@@ -175,18 +135,18 @@ namespace Bladeball
             if (KeyIndex == 0)
                 return;
 
-            byte scancode = (byte)MapVirtualKey((uint)e.KeyCode, MapVK_TO_VSC);
+            byte scancode = (byte)MapVirtualKey((uint)e.KeyCode, MapVK_to_VSC);
 
             switch (KeyIndex)
             {
                 case 1:
                     {
-                        bBlockKey1 = scancode;
+                        macro.bBlockKey1 = scancode;
                         BlockKey1.Text = e.KeyCode.ToString();
 
                         if (scancode == 0x01)
                         {
-                            bBlockKey1 = 0;
+                            macro.bBlockKey1 = 0;
                             BlockKey1.Text = "None";
                         }
 
@@ -194,12 +154,12 @@ namespace Bladeball
                     }
                 case 2:
                     {
-                        bBlockKey2 = scancode;
+                        macro.bBlockKey2 = scancode;
                         BlockKey2.Text = e.KeyCode.ToString();
 
                         if (scancode == 0x01)
                         {
-                            bBlockKey2 = 0;
+                            macro.bBlockKey2 = 0;
                             BlockKey2.Text = "None";
                         }
 
@@ -207,12 +167,12 @@ namespace Bladeball
                     }
                 case 3:
                     {
-                        iStartKey = (int)e.KeyCode;
+                        macro.iStartKey = (int)e.KeyCode;
                         StartKey.Text = e.KeyCode.ToString();
 
                         if (e.KeyCode == Keys.Escape)
                         {
-                            iStartKey = 0;
+                            macro.iStartKey = 0;
                             StartKey.Text = "None";
                         }
 
@@ -241,22 +201,21 @@ namespace Bladeball
         {
             Settings.LoadSettings();
 
-            iStartKey = Settings.data.StartKey;
-            bBlockKey1 = Settings.data.BlockKey1;
-            bBlockKey2 = Settings.data.BlockKey2;
-            CPS = Settings.data.CPS;
+            macro.iStartKey = Settings.data.StartKey;
+            macro.bBlockKey1 = Settings.data.BlockKey1;
+            macro.bBlockKey2 = Settings.data.BlockKey2;
+            macro.CPS = Settings.data.CPS;
             StartKey.Text = Settings.data.StartKeyText;
             BlockKey1.Text = Settings.data.BlockKey1Text;
             BlockKey2.Text = Settings.data.BlockKey2Text;
-            textBox1.Text = CPS.ToString();
         }
 
         private void SaveSettings()
         {
-            Settings.data.StartKey = iStartKey;
-            Settings.data.BlockKey1 = bBlockKey1;
-            Settings.data.BlockKey2 = bBlockKey2;
-            Settings.data.CPS = CPS;
+            Settings.data.StartKey = macro.iStartKey;
+            Settings.data.BlockKey1 = macro.bBlockKey1;
+            Settings.data.BlockKey2 = macro.bBlockKey2;
+            Settings.data.CPS = macro.CPS;
             Settings.data.StartKeyText = StartKey.Text;
             Settings.data.BlockKey1Text = BlockKey1.Text;
             Settings.data.BlockKey2Text = BlockKey2.Text;
@@ -285,81 +244,64 @@ namespace Bladeball
             StartKey.Text = "Enter Hotkey";
         }
 
-        private void CpsChanged(object sender, EventArgs e)
-        {
-            if (!int.TryParse(textBox1.Text, out int cps) || cps <= 0)
-                return;
-
-            CPS = cps;
-
-            Settings.data.CPS = cps;
-            Settings.SaveSettings();
-        }
-
-        private void ExitButton_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void MinimizeButton_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
         private void InitTitlebar()
         {
-            Panel Titlebar = new Panel();
-            Panel Seperator = new Panel();
+            Panel Titlebar = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 26,
+                BackColor = BackgroundTheme
 
-            Titlebar.Dock = DockStyle.Top;
-            Titlebar.Height = 26;
-            Titlebar.BackColor = Color.FromArgb(17, 19, 24);
-
-            Seperator.Dock = DockStyle.Bottom;
-            Seperator.BackColor = Color.FromArgb(75, 200, 200, 200);
-            Seperator.Height = 1;
-
+            }; Titlebar.MouseDown += pMouseDown; 
+            
             this.Controls.Add(Titlebar);
-            Titlebar.MouseDown += pMouseDown;
 
-            Button ExitButton = new Button();
-            ExitButton.Click += ExitButton_Click;
+            Panel Seperator = new Panel
+            {
+                Dock = DockStyle.Bottom,
+                BackColor = Color.FromArgb(75, 200, 200, 200),
+                Height = 1
+            };
 
-            Button MinimizeButton = new Button();
-            MinimizeButton.Click += MinimizeButton_Click;
+            Button ExitButton = new Button
+            {
+                FlatStyle = FlatStyle.Flat,
+                FlatAppearance = { BorderSize = 0, MouseOverBackColor = Color.FromArgb(75, 200, 25, 25), MouseDownBackColor = Color.FromArgb(75, 200, 25, 25) },
+                Size = new Size(40, Titlebar.Height),
+                Text = "\u2715",
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.White,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right
 
-            ExitButton.FlatStyle = FlatStyle.Flat;
-            ExitButton.FlatAppearance.BorderSize = 0;
-
-            MinimizeButton.FlatStyle = FlatStyle.Flat;
-            MinimizeButton.FlatAppearance.BorderSize = 0;
-
-            ExitButton.Size = new Size(40, Titlebar.Height);
-            MinimizeButton.Size = new Size(40, Titlebar.Height);
+            };  ExitButton.Click += delegate { Close(); };
 
             ExitButton.Location = new Point(Titlebar.ClientSize.Width - ExitButton.Width, 0);
+
+            Button MinimizeButton = new Button
+            {
+                FlatStyle = FlatStyle.Flat,
+                FlatAppearance = {BorderSize = 0, MouseOverBackColor = Color.FromArgb(75, 200, 200, 200), MouseDownBackColor = Color.FromArgb(75, 200, 200, 200)},
+                Size = new Size(40, Titlebar.Height),
+                Text = "\u0C7C",
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.White,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right
+
+            }; MinimizeButton.Click += delegate { this.WindowState = FormWindowState.Minimized; };
+
             MinimizeButton.Location = new Point(ExitButton.Left - MinimizeButton.Width, 0);
 
-            ExitButton.Text = "X";
-            MinimizeButton.Text = "--";
+            Label name = new Label
+            {
+                ForeColor = Color.White,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Anchor = AnchorStyles.Bottom | AnchorStyles.Left,
+                Size = new Size(40, Titlebar.Height),
+                AutoSize = true,
+                Text = $"Onyx v{Version}",
+            }; 
 
-            ExitButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            MinimizeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-
-            ExitButton.TextAlign = ContentAlignment.MiddleCenter;
-            MinimizeButton.TextAlign = ContentAlignment.MiddleCenter;
-
-            ExitButton.ForeColor = Color.White;
-            MinimizeButton.ForeColor = Color.White;
-
-            Label name = new Label();
-            name.ForeColor = Color.White;
-            name.TextAlign = ContentAlignment.MiddleCenter;
-            name.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            name.Size = new Size(40, Titlebar.Height);
-            name.AutoSize = true;
-            name.Location = new Point(name.Width / 2, 5);
-            name.Text = "Bladeball Macro v1.1.3";
+            name.Location = new Point(name.Width / 2 + 6, 5);
 
             Titlebar.Controls.Add(Seperator);
             Titlebar.Controls.Add(ExitButton);
@@ -372,6 +314,53 @@ namespace Bladeball
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(new ProcessStartInfo("https://github.com/vexk1x/Bladeball-macro") { UseShellExecute = true });
+        }
+
+        private void InitTrackBar()
+        {
+            CpsTrackBar.Minimum = 1;
+            CpsTrackBar.Maximum = 1000;
+            CpsTrackBar.Value = macro.CPS;
+            CpsTrackBar.TickStyle = TickStyle.None;
+
+            Label Value = new Label
+            {
+                ForeColor = Color.White,
+                Text = CpsTrackBar.Value.ToString(),
+                Size = new Size(40, 20),
+                AutoSize = true
+
+            }; 
+            
+            Value.Location = new Point(CpsTrackBar.Location.X + CpsTrackBar.Width / 2 - Value.Width / 2, CpsTrackBar.Location.Y + 20);
+
+            Button IncrementValue = new Button
+            {
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                FlatAppearance = { BorderSize = 1, BorderColor = Theme},
+                Text = "+1",
+                Size = new Size(30, 20)
+                
+
+            }; IncrementValue.Click += delegate { if (CpsTrackBar.Value == 1000) return;  CpsTrackBar.Value++; };
+
+            IncrementValue.Location = new Point(label2.Location.X, label2.Location.Y + IncrementValue.Height - 5);
+
+            CpsTrackBar.ValueChanged += delegate
+            {
+                macro.CPS = CpsTrackBar.Value;
+                Value.Text = CpsTrackBar.Value.ToString();
+
+                Settings.data.CPS = CpsTrackBar.Value;
+                Settings.SaveSettings();
+            };
+
+            CpsTrackBar.Parent.Controls.Add(Value);
+            
+            Value.BringToFront();
+
+            main.Controls.Add(IncrementValue);
         }
     }
 }
