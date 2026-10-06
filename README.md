@@ -1,24 +1,36 @@
-# Bladeball-macro
-A macro for the Roblox game "Bladeball"
-You can assign 2 Block keys and it automatically presses Left click.
-**Press ESC on a button after you clicked it to reset the Hotkey**
 
-The standard starting hotkey is F
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/vexk1x/bladeball-macro/total)
+---
+# About the Macro 
 
-## How to Download
-You can either get it from [here](https://github.com/vexk1x/Bladeball-macro/releases)
+"Onyx" is a macro for the Roblox game "Bladeball"
+You can manually assign 2 (Block) Hotkeys to parry the ball with alongside LeftClick
+You can set the Clicks per second (LeftClick is pressed Automatically)
 
-or download/copy the source code and run:
+Supported CPS: 1-1000
+
+**Press ESC while assigning a Hotkey to set it to "None"**
+
+## How to get the Macro?
+
+You have 2 options:
+
+Download it from [here](https://github.com/vexk1x/Bladeball-macro/releases)
+
+or clone/download the source code and run:
 
 ```C#
 msbuild Bladeball.slnx /p:Configuration=Release
 ```
-after you cd into the folder containing the solution file.
 
+after you cd into the folder containing the source code.
 
 ## Is it safe to use?
-Yes, the macro is safe to use and will NOT harm your pc in anyway, if you don't trust the releases then build it yourself with the tutorial above.
+Yes, the macro is safe to use and will not steal your credentials or any other info.
+Feel free to read through the source code and build it yourself if you have any doubts.
 
-## How to report bugs or leave feedback?
-If you wanna report a bug or want to leave feedback, DM me on discord: vexk1x
-You can also create an Issue on this github page.
+## How to report bugs?
+If you want to report a bug, create an issue or direct message me on my discord: vexk1x
+
+## How to leave feedback?
+again, just direct message me on discord: vexk1x
