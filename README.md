@@ -1,5 +1,6 @@
 
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/vexk1x/bladeball-macro/total)
+![GitHub Downloads](https://img.shields.io/github/downloads/vexk1x/bladeball-macro/total](https://img.shields.io/github/downloads/vexk1x/bladeball-macro/total)
+))
 ---
 # About the Macro 
 
