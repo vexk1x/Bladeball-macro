@@ -113,17 +113,20 @@ namespace Bladeball
                 if (send != null)
                     send.SendKeys();
 
-                Sleep(delay);
+                double remaining = delay - sw.Elapsed.TotalMilliseconds;
+
+                if (remaining > 0)
+                    Sleep(remaining);
             }
         }
         
-        public void Sleep(int ms)
+        public void Sleep(double ms)
         {
-            long Tsmp = Stopwatch.GetTimestamp();
+            long timestamp = Stopwatch.GetTimestamp();
 
-            long Ticks = (long)(ms * Stopwatch.Frequency / 1000);
+            long ticks = (long)(ms * Stopwatch.Frequency / 1000);
 
-            while (Stopwatch.GetTimestamp() - Tsmp < Ticks)
+            while (Stopwatch.GetTimestamp() - timestamp < ticks)
                 Thread.SpinWait(100);
         }
     }

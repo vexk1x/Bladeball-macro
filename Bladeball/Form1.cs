@@ -31,10 +31,10 @@ namespace Bladeball
 
         private int KeyIndex = 0;
 
-        private const string Version = "1.1.4";
+        private readonly Version ver = new Version("1.1.5");
 
-        private Color Theme;
-        private Color BackgroundTheme;
+        private readonly Color Theme = Color.FromArgb(50, 50, 50);
+        private readonly Color BackgroundTheme = Color.FromArgb(12, 12, 12);
 
         Macro macro;
 
@@ -42,17 +42,18 @@ namespace Bladeball
         {
             InitializeComponent();
 
+            DoubleBuffered = true;
+
             macro = new Macro(this);
 
             FormBorderStyle = FormBorderStyle.None;
 
-            Theme = Color.FromArgb(14, 16, 19);
-            BackgroundTheme = Color.FromArgb(7, 9, 10);
+            this.BackColor = BackgroundTheme;
 
             Load += Form1_Load;
             FormClosed += Form1_Close;
 
-            main.MouseDown += pMouseDown;
+            main.MouseDown += Drag;
             main.BackColor = BackgroundTheme;
 
             StyleCorners();
@@ -120,7 +121,7 @@ namespace Bladeball
             Region = new Region(path);
         }
 
-        private void pMouseDown(object sender, MouseEventArgs e)
+        private void Drag(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -252,7 +253,7 @@ namespace Bladeball
                 Height = 26,
                 BackColor = BackgroundTheme
 
-            }; Titlebar.MouseDown += pMouseDown; 
+            }; Titlebar.MouseDown += Drag; 
             
             this.Controls.Add(Titlebar);
 
@@ -298,7 +299,7 @@ namespace Bladeball
                 Anchor = AnchorStyles.Bottom | AnchorStyles.Left,
                 Size = new Size(40, Titlebar.Height),
                 AutoSize = true,
-                Text = $"Onyx v{Version}",
+                Text = $"Onyx v{ver}",
             }; 
 
             name.Location = new Point(name.Width / 2 + 6, 5);

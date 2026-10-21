@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.main = new System.Windows.Forms.Panel();
+            this.CpsTrackBar = new System.Windows.Forms.TrackBar();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label7 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,7 +41,6 @@
             this.StartKey = new System.Windows.Forms.Button();
             this.BlockKey2 = new System.Windows.Forms.Button();
             this.BlockKey1 = new System.Windows.Forms.Button();
-            this.CpsTrackBar = new System.Windows.Forms.TrackBar();
             this.main.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CpsTrackBar)).BeginInit();
             this.SuspendLayout();
@@ -65,11 +65,18 @@
             this.main.Size = new System.Drawing.Size(470, 239);
             this.main.TabIndex = 0;
             // 
+            // CpsTrackBar
+            // 
+            this.CpsTrackBar.Location = new System.Drawing.Point(311, 58);
+            this.CpsTrackBar.Name = "CpsTrackBar";
+            this.CpsTrackBar.Size = new System.Drawing.Size(147, 45);
+            this.CpsTrackBar.TabIndex = 14;
+            // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.LinkColor = System.Drawing.Color.CornflowerBlue;
-            this.linkLabel1.Location = new System.Drawing.Point(24, 198);
+            this.linkLabel1.Location = new System.Drawing.Point(317, 204);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(118, 13);
             this.linkLabel1.TabIndex = 12;
@@ -81,7 +88,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label7.Location = new System.Drawing.Point(38, 185);
+            this.label7.Location = new System.Drawing.Point(330, 191);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(85, 13);
             this.label7.TabIndex = 11;
@@ -101,7 +108,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label5.Location = new System.Drawing.Point(362, 172);
+            this.label5.Location = new System.Drawing.Point(134, 204);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(99, 13);
             this.label5.TabIndex = 9;
@@ -139,7 +146,7 @@
             // 
             // StartKey
             // 
-            this.StartKey.Location = new System.Drawing.Point(362, 188);
+            this.StartKey.Location = new System.Drawing.Point(28, 194);
             this.StartKey.Name = "StartKey";
             this.StartKey.Size = new System.Drawing.Size(75, 23);
             this.StartKey.TabIndex = 2;
@@ -163,13 +170,6 @@
             this.BlockKey1.TabIndex = 0;
             this.BlockKey1.UseVisualStyleBackColor = true;
             this.BlockKey1.Click += new System.EventHandler(this.BlockKey1_Click);
-            // 
-            // CpsTrackBar
-            // 
-            this.CpsTrackBar.Location = new System.Drawing.Point(311, 58);
-            this.CpsTrackBar.Name = "CpsTrackBar";
-            this.CpsTrackBar.Size = new System.Drawing.Size(147, 45);
-            this.CpsTrackBar.TabIndex = 14;
             // 
             // Form1
             // 
