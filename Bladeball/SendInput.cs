@@ -28,7 +28,7 @@ namespace Bladeball
             for (int i = 0; i < keys.Length; i++)
             {
                 keybd_event(0, keys[i], KEYEVENTF_SCANCODE, UIntPtr.Zero);
-                sleep.Sleep(1);
+                sleep.Sleep(0.5);
                 keybd_event(0, keys[i], KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP, UIntPtr.Zero);
             }
         }

@@ -18,6 +18,9 @@ namespace Bladeball
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 
+        [DllImport("winmm.dll")]
+        private static extern uint timeEndPeriod(uint uPeriod);
+
         private const int WM_NCLBUTTONDOWN = 0xA1;
         private const int HTCAPTION = 0x2;
 
@@ -31,7 +34,7 @@ namespace Bladeball
 
         private int KeyIndex = 0;
 
-        private readonly Version ver = new Version("1.1.5");
+        private readonly Version ver = new Version("1.1.6");
 
         private readonly Color Theme = Color.FromArgb(50, 50, 50);
         private readonly Color BackgroundTheme = Color.FromArgb(12, 12, 12);
@@ -83,6 +86,7 @@ namespace Bladeball
         private void Form1_Close(object sender, EventArgs e)
         {
             SaveSettings();
+            timeEndPeriod(1);
         }
 
         private void StyleButton(params Button[] button)

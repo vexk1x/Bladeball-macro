@@ -39,11 +39,11 @@ namespace Bladeball
         private void Click()
         {
             mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, UIntPtr.Zero);
-            Sleep(1);
+            Sleep(0.5);
             mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, UIntPtr.Zero);
         }
 
-        private int GetDelay(int cps)
+        private double GetDelay(int cps)
         {
             if (cps >= 1000)
                 return 1;
@@ -51,7 +51,7 @@ namespace Bladeball
             if (0 >= cps)
                 return 0;
 
-            return 1000 / cps;
+            return 1000.0 / cps;
         }
 
         private SendInput GetInput(byte key1, byte key2)
@@ -73,10 +73,12 @@ namespace Bladeball
         public void Start()
         {
             timeBeginPeriod(1);
-            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
 
             bool waspressed = false;
             SendInput send = null;
+            double delay = 0.0;
+
+            Stopwatch sw = new Stopwatch();
 
             while (true)
             {
@@ -87,7 +89,10 @@ namespace Bladeball
                     running = !running;
 
                     if (running)
+                    {
                         send = GetInput(bBlockKey1, bBlockKey2);
+                        delay = GetDelay(CPS);
+                    }
                 }
 
                 waspressed = pressed;
@@ -98,15 +103,14 @@ namespace Bladeball
                     continue;
                 }
 
-                int delay = GetDelay(CPS);
-
                 if (delay <= 0)
                 {
                     Thread.Sleep(5);
                     continue;
                 }
 
-                Stopwatch sw = Stopwatch.StartNew();
+
+                sw.Restart();
 
                 Click();
 
