@@ -13,7 +13,7 @@ namespace Bladeball
         private const uint KEYEVENTF_SCANCODE = 0x0008;
 
         private byte[] keys;
-        Macro sleep = new Macro(null);
+        Macro sleep = new Macro();
 
         public SendInput(params byte[] keys)
         {

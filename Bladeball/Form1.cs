@@ -21,12 +21,18 @@ namespace Bladeball
         [DllImport("winmm.dll")]
         private static extern uint timeEndPeriod(uint uPeriod);
 
-        private const int WM_NCLBUTTONDOWN = 0xA1;
-        private const int HTCAPTION = 0x2;
-
-
         [DllImport("user32.dll")]
         private static extern uint MapVirtualKey(uint uCode, uint uMapType);
+
+        [DllImport("user32.dll")]
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
+
+        [DllImport("user32.dll")]
+        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HTCAPTION = 0x2;
 
         private const uint MapVK_to_VSC = 0;
 
@@ -34,12 +40,20 @@ namespace Bladeball
 
         private int KeyIndex = 0;
 
-        private readonly Version ver = new Version("1.1.6");
+        private const int MOD_NONE = 0x0000;
+
+        private const int WM_HOTKEY = 0x0312;
+
+
+        private readonly Version ver = new Version("1.1.7");
 
         private readonly Color Theme = Color.FromArgb(50, 50, 50);
         private readonly Color BackgroundTheme = Color.FromArgb(12, 12, 12);
 
         Macro macro;
+        private Thread T;
+
+        private CancellationTokenSource cts = null;
 
         public Form1()
         {
@@ -47,7 +61,7 @@ namespace Bladeball
 
             DoubleBuffered = true;
 
-            macro = new Macro(this);
+            macro = new Macro();
 
             FormBorderStyle = FormBorderStyle.None;
 
@@ -75,18 +89,47 @@ namespace Bladeball
 
             InitTrackBar();
 
-            Thread T = new Thread(macro.Start)
-            {
-                IsBackground = true,
-                Priority = ThreadPriority.Highest,
-            }; T.Start();
-
+            RegisterHotKey(Handle, 1, MOD_NONE, macro.iStartKey);
         }
 
         private void Form1_Close(object sender, EventArgs e)
         {
             SaveSettings();
-            timeEndPeriod(1);
+            UnregisterHotKey(Handle, 1);
+            if (cts != null && !cts.IsCancellationRequested)
+                cts.Cancel();
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_HOTKEY)
+            {
+                int id = m.WParam.ToInt32();
+
+                if (id == 1 && !AssigningKey)
+                {
+                    if (T == null || !T.IsAlive)
+                    {
+                        if (cts != null)
+                            cts.Dispose();
+
+                        cts = new CancellationTokenSource();
+
+                        T = new Thread(() => macro.Start(cts.Token))
+                        {
+                            IsBackground = true
+                        };
+
+                        T.Start();
+                    }
+                    else
+                    {
+                        if (cts != null)
+                            cts.Cancel();
+                    }
+                }
+            }  
+            base.WndProc(ref m);
         }
 
         private void StyleButton(params Button[] button)
@@ -149,7 +192,7 @@ namespace Bladeball
                         macro.bBlockKey1 = scancode;
                         BlockKey1.Text = e.KeyCode.ToString();
 
-                        if (scancode == 0x01)
+                        if (scancode == 0x01 || scancode == macro.iStartKey)
                         {
                             macro.bBlockKey1 = 0;
                             BlockKey1.Text = "None";
@@ -162,7 +205,7 @@ namespace Bladeball
                         macro.bBlockKey2 = scancode;
                         BlockKey2.Text = e.KeyCode.ToString();
 
-                        if (scancode == 0x01)
+                        if (scancode == 0x01 || scancode == macro.iStartKey)
                         {
                             macro.bBlockKey2 = 0;
                             BlockKey2.Text = "None";
@@ -175,12 +218,15 @@ namespace Bladeball
                         macro.iStartKey = (int)e.KeyCode;
                         StartKey.Text = e.KeyCode.ToString();
 
+                        UnregisterHotKey(Handle, 1);
+                        RegisterHotKey(Handle, 1, MOD_NONE, macro.iStartKey);
+
                         if (e.KeyCode == Keys.Escape)
                         {
                             macro.iStartKey = 0;
                             StartKey.Text = "None";
+                            UnregisterHotKey(Handle, 1);
                         }
-
                         break;
                     }
                 default:

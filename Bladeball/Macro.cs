@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace Bladeball
 {
@@ -13,6 +14,9 @@ namespace Bladeball
 
         [DllImport("winmm.dll")]
         private static extern uint timeBeginPeriod(uint uPeriod);
+
+        [DllImport("winmm.dll")]
+        private static extern uint timeEndPeriod(uint uPeriod);
 
         [DllImport("user32.dll")]
         private static extern short GetAsyncKeyState(int vKey);
@@ -28,13 +32,6 @@ namespace Bladeball
         public volatile bool running = false;
 
         public int CPS { get; set; } = 25;
-
-        private Form1 form;
-
-        public Macro(Form1 form)
-        {
-            this.form = form;
-        }
 
         private void Click()
         {
@@ -70,68 +67,68 @@ namespace Bladeball
             return sendinp;
         }
 
-        public void Start()
+        public void Start(CancellationToken t)
         {
-            timeBeginPeriod(1);
-
-            bool waspressed = false;
-            SendInput send = null;
-            double delay = 0.0;
+            SendInput send = GetInput(bBlockKey1, bBlockKey2);
+            double delay = GetDelay(CPS);
 
             Stopwatch sw = new Stopwatch();
 
-            while (true)
+            if (iStartKey == bBlockKey1 || iStartKey == bBlockKey2)
             {
-                bool pressed = GetAsyncKeyState(iStartKey) < 0;
+                MessageBox.Show("Macro will not Start if your start hotkey is a block hotkey.", "Onyx | Bladeball macro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                if (pressed && !waspressed && !form.AssigningKey)
+            while (!t.IsCancellationRequested)
+            {
+                timeBeginPeriod(1);
+
+                try
                 {
-                    running = !running;
+                    sw.Restart();
 
-                    if (running)
-                    {
-                        send = GetInput(bBlockKey1, bBlockKey2);
-                        delay = GetDelay(CPS);
-                    }
+                    Click();
+
+                    if (send != null)
+                        send.SendKeys();
+
+                    double remaining = delay - sw.Elapsed.TotalMilliseconds;
+
+                    if (remaining > 0)
+                        Sleep(remaining);
                 }
-
-                waspressed = pressed;
-
-                if (!running)
+                catch { }
+                finally
                 {
-                    Thread.Sleep(5);
-                    continue;
+                    timeEndPeriod(1);
                 }
-
-                if (delay <= 0)
-                {
-                    Thread.Sleep(5);
-                    continue;
-                }
-
-
-                sw.Restart();
-
-                Click();
-
-                if (send != null)
-                    send.SendKeys();
-
-                double remaining = delay - sw.Elapsed.TotalMilliseconds;
-
-                if (remaining > 0)
-                    Sleep(remaining);
             }
         }
         
         public void Sleep(double ms)
         {
-            long timestamp = Stopwatch.GetTimestamp();
-
             long ticks = (long)(ms * Stopwatch.Frequency / 1000);
 
-            while (Stopwatch.GetTimestamp() - timestamp < ticks)
-                Thread.SpinWait(100);
+            long timestamp = Stopwatch.GetTimestamp() + ticks;
+
+            long e = Stopwatch.Frequency / 500;
+
+
+            while (true)
+            {
+                long remaining = timestamp - Stopwatch.GetTimestamp();
+
+                if (remaining <= 0)
+                {
+                    return;
+                }
+
+                if (remaining > e)
+                    Thread.Sleep(1);
+                else
+                    Thread.SpinWait(10);
+            }
         }
     }
 }
